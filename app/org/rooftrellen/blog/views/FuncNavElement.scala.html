@@ -1,0 +1,22 @@
+@import org.rooftrellen.blog.controllers.BlogController._
+@import org.rooftrellen.blog.controllers.routes.BlogController
+@import org.rooftrellen.blog.models.Member._
+
+@(links: Seq[(String, Option[String])])(implicit requestHeader: RequestHeader)
+
+@name = @{
+    requestHeader.session.get(NameSession).getOrElse("")
+}
+
+@if(AdminName == name) {
+    <li><a href="@BlogController.viewRegister">Register</a></li>
+} else {
+    @if(name.nonEmpty) {
+        <li><a href="@BlogController.viewBlogs(name)">My Blogs</a></li>
+        <li><a href="@BlogController.viewTags(name)">My Tags</a></li>
+        <li><a href="@BlogController.viewNewDraft(name).url">Create</a></li>
+    }
+    @for(link <- links) {
+        @Html(link._2.map(url => s"""<li><a href="$url">${link._1}</a></li>""").getOrElse(s"<li><a>${link._1}</a></li>"))
+    }
+}

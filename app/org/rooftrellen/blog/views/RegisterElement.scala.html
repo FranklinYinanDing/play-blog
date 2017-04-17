@@ -1,0 +1,36 @@
+@import helper._
+@import org.rooftrellen.blog.controllers.routes.BlogController
+@import org.rooftrellen.blog.models.Member
+@import org.rooftrellen.blog.models.Member._
+
+@(memberForm: Option[Form[Member]] = None)
+
+@nameField = @{
+    RegisterForm(NameField)
+}
+
+@passwordField = @{
+    RegisterForm(PasswordField)
+}
+
+@passwordConfirmField = @{
+    RegisterForm(PasswordConfirmField)
+}
+
+@form(BlogController.register(), 'class -> "form-auth") {
+    <div class="form-group">
+        <label class="sr-only" for="@nameField.id">Name</label>
+        <input type="text" class="form-control" id="@nameField.id" name="@nameField.name" placeholder="Enter Name" value="@memberForm.flatMap(_(NameField).value)" minlength="@NameMinLength" maxlength="@NameMaxLength" pattern="@NameRegex" title="@NameMinLength to @NameMaxLength ASCII characters, allow alphanumeric and &quot;-&quot; as separator, e.g., &quot;test-member&quot;" autofocus required>
+    </div>
+    <div class="form-group">
+        <label class="sr-only" for="@passwordField.id">Password</label>
+        <input type="password" class="form-control" id="@passwordField.id" name="@passwordField.name" placeholder="Enter Password" minlength="@PasswordMinLength" maxlength="@PasswordMaxLength" pattern="@PasswordRegex" title="@PasswordMinLength to @PasswordMaxLength printable and non whitespace ASCII characters" required/>
+    </div>
+    <div class="form-group">
+        <label class="sr-only" for="@passwordConfirmField.id">Password Confirm</label>
+        <input type="password" class="form-control" id="@passwordConfirmField.id" name="@passwordConfirmField.name" placeholder="Enter Password Again" minlength="@PasswordMinLength" maxlength="@PasswordMaxLength" pattern="@PasswordRegex" title="@PasswordMinLength to @PasswordMaxLength printable and non whitespace ASCII characters" required/>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+    </div>
+}

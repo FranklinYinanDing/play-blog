@@ -1,0 +1,10 @@
+@import org.rooftrellen.blog.controllers.routes.BlogController
+
+@(heading: String, author: String, tags: Seq[String])
+
+<h2>@heading</h2>
+<ul>
+    @for(tag <- tags) {
+        <li><a href="@BlogController.viewTag(author, tag)">@tag</a></li>
+    }
+</ul>

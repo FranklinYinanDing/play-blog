@@ -1,0 +1,35 @@
+GET         /                                                  org.rooftrellen.blog.controllers.BlogController.viewHome
+
+GET         /:author/blog/draft/new                            org.rooftrellen.blog.controllers.BlogController.viewNewDraft(author: String)
+
+GET         /:author/blog/draft/:year/:month/:day/:path        org.rooftrellen.blog.controllers.BlogController.viewBlogDraft(author: String, year: Int, month: Int, day: Int, path: String)
+
+GET         /:author/blog                                      org.rooftrellen.blog.controllers.BlogController.viewLatest(author: String)
+
+GET         /:author/blog/all                                  org.rooftrellen.blog.controllers.BlogController.viewBlogs(author: String)
+
+GET         /:author/blog/tag                                  org.rooftrellen.blog.controllers.BlogController.viewTags(author: String)
+
+GET         /:author/blog/tag/:tag                             org.rooftrellen.blog.controllers.BlogController.viewTag(author: String, tag: String)
+
+GET         /:author/blog/:year                                org.rooftrellen.blog.controllers.BlogController.viewBlogsByYear(author: String, year: Int)
+
+GET         /:author/blog/:year/:month                         org.rooftrellen.blog.controllers.BlogController.viewBlogsByMonth(author: String, year: Int, month: Int)
+
+GET         /:author/blog/:year/:month/:day                    org.rooftrellen.blog.controllers.BlogController.viewBlogsByDay(author: String, year: Int, month: Int, day: Int)
+
+GET         /:author/blog/:year/:month/:day/:path              org.rooftrellen.blog.controllers.BlogController.viewBlog(author: String, year: Int, month: Int, day: Int, path: String)
+
+GET         /register                                          org.rooftrellen.blog.controllers.BlogController.viewRegister
+
+POST        /:author/blog/draft/new                            org.rooftrellen.blog.controllers.BlogController.createBlog(author: String)
+
+POST        /:author/blog/draft/:year/:month/:day/:path        org.rooftrellen.blog.controllers.BlogController.updateBlog(author: String, year: Int, month: Int, day: Int, path: String)
+
+POST        /login                                             org.rooftrellen.blog.controllers.BlogController.login
+
+POST        /logout                                            org.rooftrellen.blog.controllers.BlogController.logout
+
+POST        /register                                          org.rooftrellen.blog.controllers.BlogController.register
+
+GET         /assets/*file                                      controllers.Assets.versioned(path="/public", file: Asset)

@@ -1,0 +1,55 @@
+@import org.rooftrellen.blog.controllers.BlogController
+
+@(title: String, content: Html, links: Seq[(String, Option[String])] = Seq.empty, warningMessage: Option[String] = None)(implicit requestHeader: RequestHeader, flash: Flash)
+
+@warning = @{
+    warningMessage.orElse(flash.get(BlogController.WarningFlash))
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/github-markdown-css/2.4.1/github-markdown.css">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <title>@title - changeme</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="@org.rooftrellen.blog.controllers.routes.BlogController.viewHome()">
+                        changeme</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                    @FuncNavElement(links)
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                    @UserNavElement()
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        @if(warning.isDefined) {
+            <div class="alert alert-warning alert-dismissable fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Warning!</strong> @warning.get
+            </div>
+        }
+        <div class="container">
+        @content
+        </div>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </body>
+</html>

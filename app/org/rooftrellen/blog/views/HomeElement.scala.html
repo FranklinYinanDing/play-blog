@@ -1,0 +1,24 @@
+@import org.rooftrellen.blog.controllers.routes.BlogController
+@import org.rooftrellen.blog.models.Member
+
+@(blogs: Seq[(String, String, Int, Int, Int, String)], members: Seq[Member])
+
+@authors = @{
+    Html(members.map(member => s"""<a href="${BlogController.viewBlogs(member.name).url}">${member.name}</a>""").mkString(", "))
+}
+
+<h2>Recent activities</h2>
+<table class="table">
+@for(blog <- blogs) {
+    <tr>
+        <td width="20%"><a href="@BlogController.viewBlogs(blog._6).url">@blog._6</a></td>
+        <td width="20%"><a href="@BlogController.viewBlogsByYear(blog._6, blog._3).url">@blog._3</a>/<a href="@BlogController.viewBlogsByMonth(blog._6, blog._3, blog._4).url">@blog._4</a>/<a href="@BlogController.viewBlogsByDay(blog._6, blog._3, blog._4, blog._5).url">@blog._5</a></td>
+        <td><a href="@BlogController.viewBlog(blog._6, blog._3, blog._4, blog._5, blog._1)">@Html(blog._2)</a></td>
+    </tr>
+}
+</table>
+@if(members.nonEmpty) {
+    <p>More from other authors: @authors.</p>
+}
+<hr>
+<h5>This blog is powered by <a href="https://github.com/FranklinYinanDing">FranklinYinanDing</a>'s <a href="https://github.com/FranklinYinanDing/play-blog">play-blog</a>.</h5>

@@ -1,0 +1,43 @@
+@import helper._
+@import org.rooftrellen.blog.models.Blog
+@import org.rooftrellen.blog.models.Blog._
+
+@(blogForm: Option[Form[Blog]] = None)(implicit requestHeader: RequestHeader)
+
+@pathField = @{
+    DraftForm(PathField)
+}
+
+@titleField = @{
+    DraftForm(TitleField)
+}
+
+@contentField = @{
+    DraftForm(ContentField)
+}
+
+@tagsField = @{
+    DraftForm(TagsField)
+}
+
+@form(Call("POST", "")) {
+    <div class="form-group">
+        <label class="sr-only" for="@pathField.id">Path</label>
+        <input type="text" class="form-control" id="@pathField.id" name="@pathField.name" value="@blogForm.flatMap(_(PathField).value)" placeholder="Enter Path" minlength="@PathMinLength" maxlength="@PathMaxLength" pattern="@PathRegex" title="@PathMinLength to @PathMaxLength ASCII characters, allow alphanumeric and &quot;-&quot; as separator, e.g., &quot;test-blog&quot;" autofocus required>
+    </div>
+    <div class="form-group">
+        <label class="sr-only" for="@titleField.id">Title</label>
+        <input type="text" class="form-control" id="@titleField.id" name="@titleField.name" value="@blogForm.flatMap(_(TitleField).value)" placeholder="Enter Title" minlength="@TitleMinLength" maxlength="@TitleMaxLength" pattern="@TitleRegex" title="@TitleMinLength to @TitleMaxLength characters, start with &quot;# &quot;, e.g., &quot;# Test Title&quot;" required>
+    </div>
+    <div class="form-group">
+        <label class="sr-only" for="@contentField.id">Content</label>
+        <textarea class="form-control" id="@contentField.id" name="@contentField.name" placeholder="Enter Content Markdown" rows="20">@blogForm.flatMap(_(ContentField).value)</textarea>
+    </div>
+    <div class="form-group">
+        <label class="sr-only" for="@tagsField.id">Tags</label>
+        <input type="text" class="form-control" id="@tagsField.id" name="@tagsField.name" value="@blogForm.flatMap(_(TagsField).value)" placeholder="Enter Tags" maxlength="@TagsMaxLength" pattern="@TagsRegex" title="at most @TagsMaxLength ASCII characters, allow alphanumeric and &quot;-&quot; as separator inside tag, &quot;,&quot; as separator among tags, e.g., &quot;tag-1,tag-2&quot;">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-default">Publish</button>
+    </div>
+}

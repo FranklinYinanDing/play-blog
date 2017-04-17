@@ -1,0 +1,11 @@
+@import org.rooftrellen.blog.controllers.routes.BlogController
+@import org.rooftrellen.blog.models.Tag
+
+@(blog: String, tags: Seq[Tag], createdYear: Int, createdMonth: Int, createdDay: Int, author: String)
+
+<article class="markdown-body">
+    @Html(blog)
+<hr>
+<h6>Author: <a href="@BlogController.viewBlogs(author).url">@author</a> on <a href="@BlogController.viewBlogsByYear(author, createdYear).url">@createdYear</a>/<a href="@BlogController.viewBlogsByMonth(author, createdYear, createdMonth).url">@createdMonth</a>/<a href="@BlogController.viewBlogsByDay(author, createdYear, createdMonth, createdDay).url">@createdDay</a></h6>
+<h6><a href="@BlogController.viewTags(author)">Tags</a>: @Html(tags.map(tag => s"""<a href="${BlogController.viewTag(author, tag.name).url}">${tag.name}</a>""").mkString(", "))</h6>
+</article>

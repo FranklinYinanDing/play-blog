@@ -1,0 +1,13 @@
+@import org.rooftrellen.blog.controllers.routes.BlogController
+
+@(heading: String, author: String, blogs: Seq[(String, String, Int, Int, Int)])
+
+<h2>@heading</h2>
+<table class="table">
+@for(blog <- blogs) {
+    <tr>
+        <td width="30%"><a href="@BlogController.viewBlogsByYear(author, blog._3).url">@blog._3</a>/<a href="@BlogController.viewBlogsByMonth(author, blog._3, blog._4).url">@blog._4</a>/<a href="@BlogController.viewBlogsByDay(author, blog._3, blog._4, blog._5).url">@blog._5</a></td>
+        <td><a href="@BlogController.viewBlog(author, blog._3, blog._4, blog._5, blog._1)">@Html(blog._2)</a></td>
+    </tr>
+}
+</table>

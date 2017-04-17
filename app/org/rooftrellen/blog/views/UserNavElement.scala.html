@@ -1,0 +1,52 @@
+@import helper._
+@import org.rooftrellen.blog.controllers.BlogController._
+@import org.rooftrellen.blog.controllers.routes.BlogController
+@import org.rooftrellen.blog.models.Member._
+
+@()(implicit requestHeader: RequestHeader)
+
+@name = @{
+    requestHeader.session.get(NameSession)
+}
+
+@nameFiled = @{
+    LoginForm(NameField)
+}
+
+@passwordField = @{
+    LoginForm(PasswordField)
+}
+
+<li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@name.getOrElse("Guest")
+        [@requestHeader.remoteAddress] <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li>
+            <div class="row">
+                <div class="col-md-12">
+                @if(name.isDefined) {
+                    @form(BlogController.logout(), 'class -> "form-auth") {
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Log Out</button>
+                        </div>
+                    }
+                } else {
+                    @form(BlogController.login(), 'class -> "form-auth") {
+                        <div class="form-group">
+                            <label class="sr-only" for="@nameFiled.id">Name</label>
+                            <input type="text" class="form-control" id="@nameFiled.id" name="@nameFiled.name" placeholder="Enter Name" minlength="@NameMinLength" maxlength="@NameMaxLength" pattern="@NameRegex" title="@NameMinLength to @NameMaxLength ASCII characters, allow alphanumeric and &quot;-&quot; as separator, e.g., &quot;test-member&quot;" autofocus required>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="@passwordField.id">Password</label>
+                            <input type="password" class="form-control" id="@passwordField.id" name="@passwordField.name" placeholder="Enter Password" minlength="@PasswordMinLength" maxlength="@PasswordMaxLength" pattern="@PasswordRegex" title="@PasswordMinLength to @PasswordMaxLength printable and non whitespace ASCII characters" required/>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                        </div>
+                    }
+                }
+                </div>
+            </div>
+        </li>
+    </ul>
+</li>

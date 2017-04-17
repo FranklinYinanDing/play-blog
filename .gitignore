@@ -1,0 +1,8 @@
+.DS_Store
+*.db
+logs/
+RUNNING_PID
+target/
+/.idea/
+/bin/
+/libexec/
